@@ -128,23 +128,21 @@ Setiap wilayah memiliki mekanik khusus yang membedakan gaya bermain:
 
 | Kelangkaan | Kategori | Cara Mendapatkan |
 |---|---|---|
-| <span style="color:#B87333">Copper<span> | Jenderal Umum | Gold murah, Market |
-| <span style="color:#A9A9A9">Silver<span> | Jenderal Terkenal | Gold sedang, Market |
-| <span style="color:#FFD700">Gold<span> | Jenderal Legendaris | Gold mahal, milestone kampanye / arc cerita |
+| <span style="color:#B87333">Copper</span> | Jenderal Umum | Gold murah, Market |
+| <span style="color:#A9A9A9">Silver</span> | Jenderal Terkenal | Gold sedang, Market |
+| <span style="color:#FFD700">Gold</span> | Jenderal Legendaris | Gold mahal, milestone kampanye / arc cerita |
 
 
 ### Sistem Upgrade
 
 - **Level Up:** Menggunakan XP dari pertempuran.
 - **Skill Upgrade:** Menggunakan Gold + material khusus dari misi.
-- **Bond Level:** Semakin sering digunakan, bond dengan sang Raja meningkat -- membuka dialog eksklusif dan bonus pasif.
 
 ### Sistem Skill
 
 Setiap jenderal memiliki 3 skill:
 - **Skill Aktif:** Diaktifkan manual saat giliran, memiliki cooldown.
 - **Skill Pasif:** Selalu aktif, memberikan bonus kondisional.
-- **Ultimate:** Skill paling kuat, bisa dipakai 1x per battle atau dengan cooldown panjang.
 
 ---
 
@@ -159,7 +157,7 @@ Setiap jenderal memiliki 3 skill:
 | **Nama** | Julia Caesar |
 | **Inspirasi Sejarah** | Julius Caesar |
 | **Wilayah** | Aurestia |
-| **Rarity** | ⭐⭐⭐⭐⭐ |
+| **Rarity** | Gold |
 | **Role** | Infantry / Strategist |
 | **Archetype Anime** | Rival yang akhirnya jadi sekutu -- ambisius, sarkastik, perfeksionis |
 
@@ -178,12 +176,11 @@ Julia Caesar adalah pemimpin Legio Aurestia, pasukan paling disiplin di benua Au
 
 | Stat | Nilai | Keterangan |
 |---|---|---|
-| Attack | 88 | Kuat di serangan langsung |
+| Attack | 88 | Memberikan damage yang besar |
 | Defense | 75 | Cukup tangguh |
-| Intelligence | 95 | Skill strategis sangat tinggi |
-| Speed | 70 | Tidak tercepat, tapi stabil |
-| Leadership | 92 | Meningkatkan performa unit sekitar |
-| Morale | 85 | Tidak mudah panik |
+| Mobility | 70 | Pergerakan cukup jauh |
+| Leadership | 92 | Meningkatkan ekonomi kota |
+| Morale | 85 | Tidak mudah masuk mode panik |
 
 ### Skills
 
@@ -192,11 +189,11 @@ Julia Caesar adalah pemimpin Legio Aurestia, pasukan paling disiplin di benua Au
 > *Cooldown: 3 giliran.*
 
 #### II. Legio Formation *(Pasif)*
-> Jika 2 atau lebih unit berdekatan di tile yang bersebelahan, seluruh unit tersebut mendapat **+20% Defense** dan tidak bisa diserang dari belakang (flanking immunity).
+> Jika 2 atau lebih unit berdekatan di tile yang bersebelahan, seluruh unit tersebut mendapat **+20% Defense**.
 
-#### III. Rubicon *(Ultimate)*
-> Julia mendeklarasikan serangan total -- seluruh pasukan sekutu di peta mendapat **+40% Attack** selama 2 giliran. Setelah digunakan, Julia tidak bisa mundur (retreat) hingga pertempuran selesai.  
-> *Bisa digunakan 1x per battle.*
+#### III. Infantry General *(Pasif)*
+> Jika memimpin pasukan infantry, unit tersebut mendapatkan **+10% Attack**.  
+
 
 ---
 
