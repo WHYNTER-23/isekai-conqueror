@@ -126,12 +126,12 @@ Setiap wilayah memiliki mekanik khusus yang membedakan gaya bermain:
 
 ### Tingkatan Jenderal (Rarity)
 
-| Bintang | Kategori | Cara Mendapatkan |
+| Kelangkaan | Kategori | Cara Mendapatkan |
 |---|---|---|
-| ⭐⭐ | Jenderal Umum | Gold murah, mudah didapat |
-| ⭐⭐⭐ | Jenderal Sejarah | Gold sedang, atau reward misi |
-| ⭐⭐⭐⭐ | Jenderal Terkenal | Gold mahal, atau milestone kampanye |
-| ⭐⭐⭐⭐⭐ | Jenderal Legendaris | Gold langka, atau selesaikan arc cerita |
+| <span style="color:#B87333">Copper<span> | Jenderal Umum | Gold murah, Market |
+| <span style="color:#A9A9A9">Silver<span> | Jenderal Terkenal | Gold sedang, Market |
+| <span style="color:#FFD700">Gold<span> | Jenderal Legendaris | Gold mahal, milestone kampanye / arc cerita |
+
 
 ### Sistem Upgrade
 
