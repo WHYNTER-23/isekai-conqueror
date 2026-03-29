@@ -1,6 +1,6 @@
 # Isekai Conqueror
 ## Game Design Document (GDD)
-**Versi:** 0.2  
+**Versi:** 0.3  
 **Tanggal:** 2026  
 **Status:** Draft Awal
 
@@ -276,7 +276,60 @@ Sang Raja tiba di Orion dan mendarat di Aurestia, wilayah yang sedang dilanda ko
 
 Tutorial di Isekai Conqueror **tidak boleh membosankan**. Seluruh tutorial disampaikan melalui narasi dan dialog Julia Caesar yang menggabungkan instruksi dengan kepribadiannya yang sarkastik. Pemain belajar sambil merasa sedang berinteraksi dengan karakter, bukan membaca manual.
 
-### Alur Tutorial (Chapter 1)
+---
+
+### 8a. Desain Peta Tutorial (Chapter 1)
+
+**Ukuran peta:** 10 x 8 tile
+
+**Kondisi menang:** Capai tile Gerbang Kota (kolom 9, baris 7)
+
+**Kondisi kalah:** Seluruh unit pemain dikalahkan
+
+#### Layout Peta
+
+```
+[ ][ ][H][H][ ][ ][R][R][H][ ]   Baris 1
+[ ][P][J][ ][ ][ ][R][ ][H][ ]   Baris 2  P=Pemain
+[ ][ ][J][F][ ][ ][ ][ ][ ][ ]   Baris 3
+[F][F][J][F][ ][S][S][S][ ][ ]   Baris 4
+[ ][ ][J][ ][ ][S][E1][ ][ ][ ]  Baris 5  E1=Musuh Infantry
+[ ][H][J][ ][ ][S][ ][E2][ ][ ]  Baris 6  E2=Musuh Range
+[ ][H][J][J][J][ ][ ][ ][OBJ][ ] Baris 7  OBJ=Gerbang Kota
+[ ][ ][ ][ ][ ][ ][ ][ ][ ][ ]   Baris 8
+
+Keterangan: H=Bukit, F=Hutan, J=Jalan, S=Sungai, R=Reruntuhan
+```
+
+#### Tile & Efek Terrain
+
+| Terrain | Efek |
+|---|---|
+| Dataran | Tidak ada bonus |
+| Bukit | Range +20% Attack, Infantry +10% Defense |
+| Hutan | Infantry +15% Defense, Cavalry -1 Mobility |
+| Jalan | Semua unit +1 Mobility |
+| Sungai | Cavalry tidak bisa menyeberang, Infantry -1 Mobility |
+| Reruntuhan | Infantry +10% Defense, cover dari serangan Range |
+
+#### Musuh di Peta Tutorial
+
+| ID | Jenis | Posisi | Perilaku AI |
+|---|---|---|---|
+| E1 | Infantry | Kol 7, Baris 5 | Bergerak mendekati pemain saat jarak <= 4 |
+| E2 | Range | Kol 8, Baris 6 | Diam di tempat, menyerang dari jarak jauh |
+
+#### Desain Tujuan Tutorial
+
+Peta sengaja dirancang untuk mengajarkan tiga hal secara alami lewat layout-nya:
+
+1. **Jalan** mengajarkan bonus Mobility -- pemain secara naluri akan mengikuti jalan karena lebih cepat
+2. **Sungai** mengajarkan terrain blocking -- pemain perlu memutar atau mencari celah penyeberangan
+3. **Reruntuhan** mengajarkan cover -- pemain bisa berlindung dari serangan E2 di balik reruntuhan
+
+---
+
+### 8b. Alur Tutorial (Chapter 1)
 
 ```
 [Cutscene] Sang Raja tiba di Orion -- disorientasi
@@ -285,38 +338,165 @@ Julia muncul -- meremehkan sang Raja
         ↓
 Julia: "Kalau kamu benar-benar Raja, tunjukkan padaku."
         ↓
-[Battle Tutorial dimulai]
+[Battle Tutorial dimulai -- peta muncul]
         ↓
-Giliran 1: Julia menjelaskan cara menggerakkan unit
+Giliran 1: Julia menjelaskan movement (prompt muncul di layar)
         ↓
-Giliran 2: Julia menjelaskan cara menyerang
+Giliran 2: Julia menjelaskan serangan saat E1 dalam jangkauan
         ↓
-Giliran 3: Pemain bebas bergerak -- Julia berkomentar
+Giliran 3: Pemain bebas -- Julia berkomentar soal terrain
         ↓
-Musuh terakhir dikalahkan
+E1 dikalahkan -- Julia memberi komentar singkat
+        ↓
+Giliran selanjutnya: Julia menjelaskan serangan jarak jauh E2
+        ↓
+E2 dikalahkan -- objektif Gerbang Kota terbuka
+        ↓
+Pemain mencapai Gerbang Kota
         ↓
 Julia: "...Tidak buruk. Untuk pemula."
         ↓
-[Cutscene singkat] Julia setuju memandu sang Raja
+[Cutscene penutup] Julia setuju memandu sang Raja
 ```
 
 ### Hal yang Diajarkan di Tutorial
 
-1. **Sistem giliran** -- cara menggerakkan unit dan menyerang.
-2. **Tile & jangkauan** -- berapa jauh unit bisa bergerak.
-3. **Penggunaan skill** -- menggunakan *Veni, Vidi, Vici* untuk pertama kali.
-4. **Kondisi menang** -- memahami objektif misi.
-5. **UI dasar** -- HP bar, giliran, tombol end turn.
+1. **Sistem giliran** -- cara menggerakkan unit dan menyerang
+2. **Tile & jangkauan** -- berapa jauh unit bisa bergerak
+3. **Terrain bonus** -- efek hutan, bukit, jalan, sungai
+4. **Jenis unit** -- perbedaan Infantry vs Range
+5. **Kondisi menang** -- capai objektif, bukan hanya habisi musuh
+6. **UI dasar** -- HP bar, giliran, tombol end turn
 
-### Gaya Dialog Julia di Tutorial
+---
 
-Julia **tidak** berbicara seperti NPC tutorial biasa. Contoh:
+### 8c. Script Dialog Chapter 1
 
-> *"Tile itu. Gerakkan unitmu ke sana. Jangan membuatku menjelaskan dua kali."*
+#### Scene 1 -- Kedatangan (Cutscene)
 
-> *"Musuh di depanmu tidak akan menunggu kamu berpikir selamanya, Raja."*
+> **[Layar gelap. Suara angin. Perlahan muncul cahaya.]**
 
-> *"Skill-ku bernama Veni, Vidi, Vici. Datang, Lihat, Menang. Kamu cukup tekan tombol itu -- sisanya biar aku yang urus."*
+> **Julia:** "..."
+> *(Hening. Langkah kaki mendekat.)*
+
+> **Julia:** "Jadi ini dia yang disebut Sang Dewi sebagai 'harapan Orion'."
+> *(Nada datar, tidak terkesan sama sekali.)*
+
+> **Julia:** "Tidak ada apa-apanya."
+
+> **Raja:** "Kamu siapa?"
+
+> **Julia:** "Julia Caesar. Pemimpin Legio Aurestia."
+> *(Membalik badan, tidak memandang sang Raja.)*
+
+> **Julia:** "Dan kamu adalah orang asing yang entah dari mana, yang tiba-tiba mengklaim akan membawa kedamaian ke Orion."
+
+> **Julia:** "Lucu."
+
+---
+
+#### Scene 2 -- Tantangan (Menjelang Battle)
+
+> **Raja:** "Aku tidak mengklaim apapun. Sang Dewi yang--"
+
+> **Julia:** "Aku tidak peduli apa kata Sang Dewi."
+> *(Berbalik, menatap tajam.)*
+
+> **Julia:** "Yang aku pedulikan adalah satu hal -- apakah kamu layak?"
+
+> **Julia:** "Buktikan. Sekarang."
+
+> **[Transisi ke peta pertempuran]**
+
+---
+
+#### Scene 3 -- Tutorial Giliran 1 (Movement)
+
+> **Julia:** *(muncul di sisi layar)*
+> "Kita mulai dari dasar. Gerakkan unitmu."
+
+> **[Prompt UI: tile hijau muncul menunjukkan jangkauan]**
+
+> **Julia:** "Tile yang bercahaya adalah area yang bisa kamu capai giliran ini."
+> "Jalan itu -- ikuti jalan. Lebih cepat."
+
+> **[Setelah pemain bergerak]**
+
+> **Julia:** "Baik. Tidak terlalu buruk."
+
+---
+
+#### Scene 4 -- Tutorial Giliran 2 (Combat)
+
+> **[E1 masuk jangkauan serangan]**
+
+> **Julia:** "Musuh dalam jangkauan. Serang."
+
+> **[Prompt UI: tile oranye muncul pada E1]**
+
+> **Julia:** "Infantry lawan Infantry. Tidak ada keunggulan. Murni kekuatan."
+> "Jangan ragukan dirimu."
+
+> **[Setelah serangan berhasil]**
+
+> **Julia:** "Damage dihitung berdasarkan Attack dikurangi Defense musuh."
+> "Ingat itu."
+
+---
+
+#### Scene 5 -- Tutorial Terrain (Sungai & Cover)
+
+> **[Pemain mendekati sungai]**
+
+> **Julia:** "Berhenti."
+> "Sungai. Infantry bisa menyeberang -- tapi gerakanmu akan melambat."
+> "Cavalry tidak bisa sama sekali. Pilih jalurmu dengan bijak."
+
+> **[Pemain menggunakan reruntuhan sebagai cover dari E2]**
+
+> **Julia:** "Bagus. Reruntuhan itu memberi perlindungan dari serangan jarak jauh."
+> "Musuh di belakang itu -- dia Range. Jangan berdiri di tempat terbuka."
+
+---
+
+#### Scene 6 -- E1 Dikalahkan
+
+> **Julia:** "Satu musuh jatuh."
+> *(Singkat. Tidak berlebihan.)*
+
+> **Julia:** "Masih ada satu lagi. Yang itu berbahaya dari jauh."
+> "Dekati dia, potong jarak serangannya."
+
+---
+
+#### Scene 7 -- E2 Dikalahkan & Objektif
+
+> **[E2 dikalahkan]**
+
+> **Julia:** "Gerbang Kota. Di sana."
+> "Capai itu, dan kamu selesai."
+
+> **[Pemain mencapai Gerbang Kota]**
+
+> **Julia:** "..."
+> *(Diam sejenak.)*
+
+> **Julia:** "...Tidak buruk. Untuk pemula."
+
+---
+
+#### Scene 8 -- Penutup (Cutscene)
+
+> **Raja:** "Apakah itu cukup untuk membuktikan diriku?"
+
+> **Julia:** "Belum."
+> *(Berbalik berjalan pergi.)*
+
+> **Julia:** "Tapi kamu tidak mempermalukanku. Itu cukup untuk sekarang."
+
+> **Julia:** "Ikuti aku. Aurestia butuh lebih dari sekadar satu pertempuran kecil."
+
+> **[Cutscene berakhir. Chapter 1 selesai. Julia Caesar bergabung sebagai jenderal.]**
 
 ---
 
@@ -369,14 +549,14 @@ Julia **tidak** berbicara seperti NPC tutorial biasa. Contoh:
 
 ## 12. Roadmap Pengembangan
 
-### Fase 1 -- Fondasi (Sekarang)
+### Fase 1 -- Fondasi (SELESAI)
 - [x] Konsep & visi game
 - [x] Game Design Document v0.1
 - [x] Desain wilayah (5 wilayah)
 - [x] Desain jenderal pertama (Julia Caesar)
 - [x] Sistem unit (Infantry, Cavalry, Range) & triangle system
-- [ ] Desain peta tutorial Aurestia
-- [ ] Script dialog Chapter 1
+- [x] Desain peta tutorial Aurestia (10x8 tile, 2 musuh, 1 objektif)
+- [x] Script dialog Chapter 1 (8 scene lengkap)
 
 ### Fase 2 -- Prototipe
 - [x] Setup Godot Engine
@@ -411,4 +591,4 @@ Julia **tidak** berbicara seperti NPC tutorial biasa. Contoh:
 ---
 
 *Dokumen ini akan terus diperbarui seiring perkembangan proyek.*  
-*Versi berikutnya: GDD v0.3 -- Desain peta tutorial & enemy pertama.*
+*Versi berikutnya: GDD v0.4 -- Desain Chapter 2 & sistem jenderal lengkap.*
