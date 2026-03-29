@@ -1,6 +1,6 @@
 # Isekai Conqueror
 ## Game Design Document (GDD)
-**Versi:** 0.1  
+**Versi:** 0.2  
 **Tanggal:** 2026  
 **Status:** Draft Awal
 
