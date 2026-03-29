@@ -87,8 +87,54 @@ Lanjut ke misi berikutnya
 
 - **Giliran (Turn):** Pemain dan musuh bergerak bergantian. Setiap unit memiliki jatah gerak dan aksi per giliran.
 - **Peta Berbasis Tile:** Peta dibagi dalam grid tile. Setiap unit memiliki jangkauan gerak yang berbeda tergantung jenis pasukan.
-- **Jenis Pasukan:** Infantry, Cavalry, Archer, Siege -- masing-masing punya kelebihan dan kelemahan (sistem segitiga atau lebih kompleks).
+- **Jenis Pasukan:** Infantry, Cavalry, Range -- masing-masing punya kelebihan dan kelemahan berdasarkan sistem segitiga.
 - **Objektif Variatif:** Tidak hanya "habisi semua musuh" -- ada objektif seperti pertahankan titik, escort unit, selesaikan dalam X giliran, dll.
+
+---
+
+## 3b. Sistem Unit
+
+Terdapat **3 jenis unit** yang bisa dikerahkan di medan perang. Setiap jenis memiliki peran, kelebihan, dan kelemahan yang berbeda.
+
+### Tiga Jenis Unit
+
+| Unit | Simbol | Peran | Jangkauan Serang |
+|---|---|---|---|
+| **Infantry** | Pedang | Garda depan, tank | 1 tile (jarak dekat) |
+| **Cavalry** | Kuda | Penyerang cepat | 1 tile (jarak dekat) |
+| **Range** | Panah | Penyerang jarak jauh | 2-3 tile |
+
+### Stat Dasar Per Unit
+
+| Stat | Infantry | Cavalry | Range |
+|---|---|---|---|
+| HP | Tinggi | Sedang | Rendah |
+| Attack | Sedang | Tinggi | Sedang |
+| Defense | Tinggi | Rendah | Rendah |
+| Mobility | Rendah (2 tile) | Tinggi (4 tile) | Sedang (3 tile) |
+
+### Sistem Segitiga (Triangle System)
+
+Unit memiliki keunggulan dan kelemahan satu sama lain mengikuti pola segitiga:
+
+```
+Infantry --> menang lawan Cavalry
+Cavalry  --> menang lawan Range
+Range    --> menang lawan Infantry
+```
+
+Unit yang "menang" dalam segitiga mendapat bonus **+25% damage** saat menyerang lawan yang lemah terhadapnya.
+
+### Bonus Terrain
+
+Setiap jenis unit mendapat bonus berdasarkan terrain tile:
+
+| Terrain | Bonus |
+|---|---|
+| Dataran (Plain) | Tidak ada bonus |
+| Hutan (Forest) | Infantry +15% Defense, Cavalry -1 Mobility |
+| Bukit (Hill) | Range +20% Attack, Infantry +10% Defense |
+| Sungai (River) | Cavalry tidak bisa lewat, Infantry -1 Mobility |
 
 ---
 
@@ -158,7 +204,8 @@ Setiap jenderal memiliki 3 skill:
 | **Inspirasi Sejarah** | Julius Caesar |
 | **Wilayah** | Aurestia |
 | **Rarity** | Gold |
-| **Role** | Infantry / Strategist |
+| **Role** | Infantry Specialist |
+| **Spesialisasi** | Memimpin unit Infantry -- mendapat bonus eksklusif saat memimpin pasukan berjenis Infantry |
 | **Archetype Anime** | Rival yang akhirnya jadi sekutu -- ambisius, sarkastik, perfeksionis |
 
 ### Kepribadian
@@ -327,13 +374,17 @@ Julia **tidak** berbicara seperti NPC tutorial biasa. Contoh:
 - [x] Game Design Document v0.1
 - [x] Desain wilayah (5 wilayah)
 - [x] Desain jenderal pertama (Julia Caesar)
+- [x] Sistem unit (Infantry, Cavalry, Range) & triangle system
 - [ ] Desain peta tutorial Aurestia
 - [ ] Script dialog Chapter 1
 
 ### Fase 2 -- Prototipe
-- [ ] Setup Godot Engine
-- [ ] Implementasi sistem tile & movement
-- [ ] Implementasi sistem giliran dasar
+- [x] Setup Godot Engine
+- [x] Implementasi sistem tile & movement
+- [x] Implementasi sistem giliran dasar
+- [x] Sistem HP & combat dasar
+- [ ] Implementasi 3 jenis unit (Infantry, Cavalry, Range)
+- [ ] Implementasi triangle system
 - [ ] Peta tutorial sederhana (1 stage)
 - [ ] Placeholder art untuk unit
 
@@ -360,4 +411,4 @@ Julia **tidak** berbicara seperti NPC tutorial biasa. Contoh:
 ---
 
 *Dokumen ini akan terus diperbarui seiring perkembangan proyek.*  
-*Versi berikutnya: GDD v0.2 -- Desain peta tutorial & enemy pertama.*
+*Versi berikutnya: GDD v0.3 -- Desain peta tutorial & enemy pertama.*
