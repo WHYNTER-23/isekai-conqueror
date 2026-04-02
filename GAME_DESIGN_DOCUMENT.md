@@ -1,6 +1,6 @@
 # Isekai Conqueror
 ## Game Design Document (GDD)
-**Versi:** 0.3  
+**Versi:** 0.4  
 **Tanggal:** 2026  
 **Status:** Draft Awal
 
@@ -86,7 +86,12 @@ Lanjut ke misi berikutnya
 ### Mekanik Dasar
 
 - **Giliran (Turn):** Pemain dan musuh bergerak bergantian. Setiap unit memiliki jatah gerak dan aksi per giliran.
-- **Peta Berbasis Tile:** Peta dibagi dalam grid tile. Setiap unit memiliki jangkauan gerak yang berbeda tergantung jenis pasukan.
+- **Peta Berbasis Hex Tile:** Peta dibagi dalam grid heksagonal (segi enam). Setiap hex memiliki **6 arah gerak** -- lebih natural dan fleksibel dibanding grid persegi.
+- **Sistem Aksi Independen:** Gerak dan serang adalah dua aksi yang **terpisah dan bebas**. Unit bisa:
+  - Bergerak saja (tanpa menyerang)
+  - Menyerang saja (tanpa bergerak, jika musuh sudah dalam jangkauan)
+  - Bergerak lalu menyerang
+  - Tidak melakukan apa-apa (skip)
 - **Jenis Pasukan:** Infantry, Cavalry, Range -- masing-masing punya kelebihan dan kelemahan berdasarkan sistem segitiga.
 - **Objektif Variatif:** Tidak hanya "habisi semua musuh" -- ada objektif seperti pertahankan titik, escort unit, selesaikan dalam X giliran, dll.
 
@@ -98,11 +103,11 @@ Terdapat **3 jenis unit** yang bisa dikerahkan di medan perang. Setiap jenis mem
 
 ### Tiga Jenis Unit
 
-| Unit | Simbol | Peran | Jangkauan Serang |
+| Unit | Peran | Jangkauan Serang | Aksi per Giliran |
 |---|---|---|---|
-| **Infantry** | Pedang | Garda depan, tank | 1 tile (jarak dekat) |
-| **Cavalry** | Kuda | Penyerang cepat | 1 tile (jarak dekat) |
-| **Range** | Panah | Penyerang jarak jauh | 2-3 tile |
+| **Infantry** | Garda depan, tank | 1 hex (jarak dekat) | Gerak + Serang (bebas urutan) |
+| **Cavalry** | Penyerang cepat | 1 hex (jarak dekat) | Gerak + Serang (bebas urutan) |
+| **Range** | Penyerang jarak jauh | 2-3 hex | Serang tanpa perlu bergerak |
 
 ### Stat Dasar Per Unit
 
@@ -111,30 +116,49 @@ Terdapat **3 jenis unit** yang bisa dikerahkan di medan perang. Setiap jenis mem
 | HP | Tinggi | Sedang | Rendah |
 | Attack | Sedang | Tinggi | Sedang |
 | Defense | Tinggi | Rendah | Rendah |
-| Mobility | Rendah (2 tile) | Tinggi (4 tile) | Sedang (3 tile) |
+| Mobility | 2 hex | 4 hex | 3 hex |
+| Jangkauan Serang | 1 hex | 1 hex | 3 hex |
+
+### Sistem Aksi Per Giliran
+
+Setiap unit mendapat **2 token aksi** per giliran:
+- **Move token** -- digunakan untuk bergerak ke hex tujuan
+- **Attack token** -- digunakan untuk menyerang musuh dalam jangkauan
+
+Kedua token bisa digunakan dalam urutan bebas, atau salah satu saja. Setelah kedua token habis atau pemain menekan **End Turn**, giliran berpindah ke musuh.
 
 ### Sistem Segitiga (Triangle System)
 
-Unit memiliki keunggulan dan kelemahan satu sama lain mengikuti pola segitiga:
-
 ```
-Infantry --> menang lawan Cavalry
-Cavalry  --> menang lawan Range
-Range    --> menang lawan Infantry
+Infantry --> menang lawan Cavalry   (+25% damage)
+Cavalry  --> menang lawan Range     (+25% damage)
+Range    --> menang lawan Infantry  (+25% damage)
 ```
 
-Unit yang "menang" dalam segitiga mendapat bonus **+25% damage** saat menyerang lawan yang lemah terhadapnya.
+### Hex Grid -- 6 Arah Gerak
 
-### Bonus Terrain
+Berbeda dari grid persegi (4 arah), hex grid memberi **6 arah gerak**:
 
-Setiap jenis unit mendapat bonus berdasarkan terrain tile:
+```
+    [TL][TR]
+  [L]  [ ]  [R]
+    [BL][BR]
+```
 
-| Terrain | Bonus |
+Ini membuat flanking, pengepungan, dan manuver terasa lebih natural dan taktis.
+
+### Bonus Terrain (Hex)
+
+Setiap jenis unit mendapat bonus berdasarkan terrain hex:
+
+| Terrain | Efek |
 |---|---|
 | Dataran (Plain) | Tidak ada bonus |
 | Hutan (Forest) | Infantry +15% Defense, Cavalry -1 Mobility |
 | Bukit (Hill) | Range +20% Attack, Infantry +10% Defense |
 | Sungai (River) | Cavalry tidak bisa lewat, Infantry -1 Mobility |
+| Jalan (Road) | Semua unit +1 Mobility |
+| Reruntuhan (Ruin) | Infantry +10% Defense, cover dari Range |
 
 ---
 
@@ -560,12 +584,15 @@ Julia: "...Tidak buruk. Untuk pemula."
 
 ### Fase 2 -- Prototipe
 - [x] Setup Godot Engine
-- [x] Implementasi sistem tile & movement
+- [x] Implementasi sistem tile & movement (square grid)
 - [x] Implementasi sistem giliran dasar
 - [x] Sistem HP & combat dasar
-- [ ] Implementasi 3 jenis unit (Infantry, Cavalry, Range)
-- [ ] Implementasi triangle system
-- [ ] Peta tutorial sederhana (1 stage)
+- [x] Implementasi 3 jenis unit (Infantry, Cavalry, Range)
+- [x] Implementasi triangle system
+- [x] Implementasi terrain system (BFS pathfinding)
+- [ ] Migrasi ke hex grid
+- [ ] Sistem aksi independen (Move token + Attack token)
+- [ ] Peta tutorial hex sederhana (1 stage)
 - [ ] Placeholder art untuk unit
 
 ### Fase 3 -- Alpha
@@ -591,4 +618,4 @@ Julia: "...Tidak buruk. Untuk pemula."
 ---
 
 *Dokumen ini akan terus diperbarui seiring perkembangan proyek.*  
-*Versi berikutnya: GDD v0.4 -- Desain Chapter 2 & sistem jenderal lengkap.*
+*Versi berikutnya: GDD v0.5 -- Desain Chapter 2 & sistem jenderal lengkap.*
