@@ -1,6 +1,6 @@
 # Isekai Conqueror
 ## Game Design Document (GDD)
-**Versi:** 0.4  
+**Versi:** 0.6  
 **Tanggal:** 2026  
 **Status:** Draft Awal
 
@@ -18,8 +18,10 @@
 8. [Tutorial Design](#8-tutorial-design)
 9. [Mode Permainan](#9-mode-permainan)
 10. [Monetisasi](#10-monetisasi)
-11. [Referensi & Inspirasi](#11-referensi--inspirasi)
-12. [Roadmap Pengembangan](#12-roadmap-pengembangan)
+11. [UI & UX Design](#11-ui--ux-design)
+12. [Sistem In-Battle](#12-sistem-in-battle)
+13. [Referensi & Inspirasi](#13-referensi--inspirasi)
+14. [Roadmap Pengembangan](#14-roadmap-pengembangan)
 
 ---
 
@@ -45,7 +47,11 @@ Isekai Conqueror adalah game strategi berbasis giliran di mana pemain berperan s
 
 ### Latar Dunia
 
-Dunia **Orion** adalah dunia paralel yang kaya akan sejarah dan kekuatan magis. Selama berabad-abad, lima wilayah besar di Orion hidup dalam keseimbangan yang rapuh. Namun kini, keseimbangan itu telah hancur -- perang, penghianatan, dan kekuatan gelap yang belum diketahui asalnya mulai menggerogoti Orion dari dalam.
+Dunia **Orion** adalah dunia paralel yang kaya akan sejarah dan kekuatan magis. Lima wilayah besar Orion -- Aurestia, Valdenmoor, Sakurima, Grandilion, dan The Shattered North -- masing-masing berdiri sebagai **benua yang terpisah**, dikelilingi oleh **Samudra Abyssal** yang luas dan ganas.
+
+Selama berabad-abad, kelima benua ini hidup dalam isolasi total. Bukan karena tidak ada keinginan untuk menjelajah -- melainkan karena **Samudra Abyssal menyimpan teror yang tak tertandingi**: monster-monster laut purba yang disebut **Levianthos**, makhluk raksasa yang menghancurkan setiap kapal yang berani melewati batas perairan dangkal. Tidak ada satu pun ekspedisi yang pernah kembali. Karena itulah, kelima wilayah Orion tidak pernah saling mengenal -- mereka tumbuh dengan budaya, bahasa, pasukan, dan sejarah yang sepenuhnya berbeda.
+
+Namun kini, keseimbangan dalam masing-masing benua telah hancur dari dalam -- perang saudara, pengkhianatan, dan **kekuatan gelap yang belum diketahui asalnya** mulai menggerogoti Orion satu per satu. Sang Dewi menyadari bahwa ancaman ini bukan berasal dari salah satu benua -- melainkan dari sesuatu yang jauh lebih tua, yang tidur di bawah dasar Samudra Abyssal.
 
 **Sang Dewi Orion** -- sosok misterius yang menjaga keseimbangan dunia -- menyadari bahwa tidak ada satu pun pemimpin di Orion yang mampu menyatukan kelima wilayah. Karena itu, ia membuka portal ke dunia lain dan memanggil seseorang dari luar: seorang Raja yang belum terkontaminasi oleh perpecahan Orion.
 
@@ -57,7 +63,8 @@ Dunia **Orion** adalah dunia paralel yang kaya akan sejarah dan kekuatan magis. 
 
 - **Para Jenderal** bukan sekadar prajurit -- mereka adalah jiwa-jiwa pahlawan legendaris dari berbagai era sejarah yang telah terlahir kembali di Orion dengan kekuatan penuh namun tanpa memori masa lalu mereka.
 - **Sang Dewi** memiliki motif yang belum sepenuhnya jelas -- apakah ia benar-benar menginginkan kedamaian, atau ada sesuatu yang lebih besar di balik pemanggilan sang Raja?
-- **Kekuatan Gelap** yang menjadi dalang kekacauan Orion akan terungkap secara bertahap sepanjang kampanye.
+- **Samudra Abyssal & Levianthos** -- monster laut purba yang memisahkan kelima benua. Kelak, menaklukkan Levianthos akan menjadi kunci membuka jalur antar benua dan membuka chapter akhir game.
+- **Kekuatan Gelap** yang menjadi dalang kekacauan Orion tidur di bawah Samudra Abyssal -- hubungannya dengan Levianthos belum diketahui dan akan terungkap bertahap sepanjang kampanye.
 
 ---
 
@@ -559,7 +566,288 @@ Julia: "...Tidak buruk. Untuk pemula."
 
 ---
 
-## 11. Referensi & Inspirasi
+## 11. UI & UX Design
+
+### Filosofi UI
+
+UI Isekai Conqueror menggabungkan estetika **medieval fantasy** dari European War 7 dengan sentuhan **anime** yang hangat. Setiap layar harus terasa konsisten -- seperti membuka halaman buku tua yang hidup.
+
+### Referensi UI dari European War 7
+
+Berdasarkan analisis screenshot EW7, berikut elemen yang diadaptasi untuk Isekai Conqueror:
+
+#### Navigasi Utama (Main Menu)
+Tiga tombol besar di kanan layar:
+- **Campaign** -- mode cerita utama
+- **Conquest** -- mode sandbox *(fase lanjut)*
+- **Territory** -- mode pertahanan wilayah *(fase lanjut)*
+
+Ikon pendukung di kiri layar: Event, Setting, Notice, Sign-in (Daily Login), Cloud Archive.
+
+#### Bottom Navigation (dalam Campaign)
+Empat tab tetap di bawah layar:
+
+| Tab | Fungsi di EW7 | Adaptasi untuk Isekai Conqueror |
+|---|---|---|
+| **Castle** | Pilih raja & upgrade | **Palace** -- pilih Raja & upgrade istana |
+| **Item** | Inventori & crafting | **Item** -- equipment untuk jenderal |
+| **General** | Koleksi jenderal | **General** -- koleksi & upgrade jenderal |
+| **Shop** | Beli item dengan Gold | **Market** -- beli unit, item, & material |
+
+#### Sistem Mata Uang
+EW7 menggunakan dua mata uang utama yang terlihat di HUD atas: Gold (koin) dan Medal (laurel). Isekai Conqueror mengadopsi sistem serupa:
+
+| Mata Uang | Cara Dapat | Kegunaan |
+|---|---|---|
+| **Gold** | Gameplay, daily login, stage reward | Rekrut jenderal, beli item, upgrade |
+| **Crystal** | Event, achievement, pembelian | Gacha skin, item eksklusif event |
+
+#### Layar General (Jenderal)
+Berdasarkan screenshot EW7 General screen -- jenderal ditampilkan dalam **grid portrait** dengan tab rarity di atas. Adaptasi untuk Isekai Conqueror:
+- Tab rarity: **Gold / Silver / Copper** (sesuai sistem kita)
+- Portrait gaya anime dengan frame dekoratif
+- Tap portrait = buka detail stats, skill, dan lore jenderal
+
+#### Sistem Item
+EW7 membagi item ke dalam tiga kategori (tab atas): Equipment, War Gear, dan Armor. Adaptasi:
+- **Equipment** -- senjata untuk boost Attack jenderal
+- **War Gear** -- item situasional (catapult, dll)
+- **Relic** -- armor & artefak untuk boost Defense & skill
+
+#### Sistem Triumphs (Achievement)
+EW7 punya sistem achievement berjenjang dengan reward berlapis. Isekai Conqueror mengadopsi:
+- **Triumphs** -- achievement dengan progress bar dan reward bertahap
+- Contoh: "Selesaikan 2 misi tutorial", "Kumpulkan 4 Jenderal", "Menangkan 10 pertempuran"
+
+#### Sistem Bond
+EW7 menampilkan Bond sebagai pasangan jenderal yang memberi bonus pasif saat keduanya dimiliki. Adaptasi:
+- **Pact** -- dua jenderal yang memiliki hubungan sejarah (Julia Caesar & Cleopatra, Joan of Arc & Saladin, dll)
+- Saat keduanya aktif di roster, bonus pasif aktif (misal: +15% Attack untuk semua Infantry)
+
+#### Sistem Daily Login
+EW7 menampilkan kalender reward harian dengan item berbeda setiap hari. Adaptasi:
+- Login harian memberi Gold, Crystal, dan material upgrade
+- Hari ke-7 memberikan jenderal Silver tier gratis
+
+#### Privilege / Battle Pass
+EW7 menjual "Privilege" berupa buff permanen. Ini adalah area yang perlu **hati-hati** -- Isekai Conqueror memilih pendekatan yang lebih player-friendly:
+- **Tidak ada buff permanen berbayar** yang mempengaruhi gameplay
+- Satu-satunya pembelian opsional: **Cosmetic Pass** (skin jenderal, efek visual giliran, frame portrait)
+
+#### Growth Path
+
+EW7 memiliki sistem **Growth Path** -- semacam battle pass gratis yang progresif. Pemain menyelesaikan quest bertahap dan mendapat reward. Isekai Conqueror mengadopsinya sebagai:
+
+- **Conqueror's Path** -- sistem progression utama
+- Setiap stage memiliki 4-6 quest (misal: selesaikan tutorial, rekrut jenderal pertama, menangkan 5 battle)
+- Menyelesaikan semua quest di satu stage membuka stage berikutnya + reward besar
+
+#### Quick Collection
+
+Tombol **"One Click Collection"** di EW7 memungkinkan pemain mengambil semua reward harian sekaligus. Isekai Conqueror mengadopsi fitur ini -- pemain tidak perlu mengklik satu per satu.
+
+#### Sistem Dialog Dalam Battle
+
+EW7 menampilkan portrait jenderal di pojok kiri bawah dengan speech bubble saat battle berlangsung. Ini adalah elemen yang **wajib** diadopsi untuk Isekai Conqueror karena sangat cocok dengan konsep karakter anime kita -- portrait Julia Caesar dengan ekspresi berbeda-beda memberikan personalitas yang kuat.
+
+---
+
+## 12. Sistem In-Battle
+
+Bagian ini mendokumentasikan semua sistem yang aktif **selama pertempuran berlangsung**, berdasarkan analisis gameplay European War 7 sebagai referensi.
+
+---
+
+### 12a. Tiga Sumber Daya (Resources)
+
+Setiap misi memiliki tiga sumber daya yang mengalir setiap giliran:
+
+| Sumber Daya | Ikon | Sumber | Kegunaan |
+|---|---|---|---|
+| **Gold** | Koin emas | Kota, quest reward | Rekrut unit, beli item |
+| **Iron** | Batang besi | Kota (Workshop) | Upgrade unit, crafting |
+| **Wisdom** | Roda gigi | Kota (Library) | Unlock kebijakan kerajaan |
+
+Income per giliran ditampilkan di layar awal misi sebelum battle dimulai, dan diupdate di HUD kiri layar setiap giliran. Kota yang lebih berkembang menghasilkan lebih banyak ketiga resource ini.
+
+---
+
+### 12b. Sistem Kota
+
+Kota adalah **sumber daya utama** di peta. Setiap kota bisa dikuasai, dipertahankan, dan ditingkatkan.
+
+#### Properti Kota
+
+| Properti | Keterangan |
+|---|---|
+| **Durability (HP)** | HP kota -- jika habis, kota jatuh ke tangan musuh |
+| **Level** | Level 1-5, mempengaruhi semua output |
+| **Gold per giliran** | Income Gold dari kota ini |
+| **Iron per giliran** | Income Iron dari kota ini |
+| **Wisdom per giliran** | Income Wisdom dari kota ini |
+| **Unit capacity** | Level kota menentukan tier unit yang bisa direkrut |
+
+#### Bangunan Kota (tiga slot)
+
+| Bangunan | Fungsi |
+|---|---|
+| **Fortification** | Meningkatkan HP dan Defense kota |
+| **House** | Meningkatkan populasi & Gold per giliran |
+| **Workshop** | Meningkatkan Iron & Wisdom per giliran |
+
+#### Kondisi Kota
+
+Kota bisa berada dalam dua kondisi yang mempengaruhi income:
+- **Peaceful** -- income normal, unit bisa direkrut
+- **Under Siege** -- income berkurang, unit tidak bisa direkrut
+
+---
+
+### 12c. Rekrutmen Unit di Kota
+
+Setiap kota yang dikuasai bisa digunakan untuk merekrut unit baru selama battle. Bottom navigation saat klik kota menampilkan opsi rekrut.
+
+Unit yang tersedia ditentukan oleh **level kota**:
+- Level 1-2: Unit dasar (tier 1)
+- Level 3-4: Unit menengah (tier 2-3)
+- Level 5: Unit elite (tier 4-5)
+
+Unit baru direkrut menggunakan Gold dan langsung muncul di hex kota tersebut.
+
+---
+
+### 12d. HUD In-Battle
+
+**HUD Kiri (resource & status):**
+```
+[Populasi / Kapasitas]
+[Gold income per giliran]
+[Iron income per giliran]
+[Wisdom income per giliran]
+[Morale kerajaan]
+[Unit 1 -- HP bar]
+[Unit 2 -- HP bar]
+[Unit 3 -- HP bar]
+...
+```
+
+**HUD Kanan Atas:**
+- Tombol Pause / Menu
+- Tombol Skip animasi (fast forward)
+
+**HUD Kanan Bawah:**
+- Tombol End Turn (hourglass)
+- Tombol Skip animasi musuh
+
+**Bottom Navigation (dalam battle):**
+
+| Tombol | Fungsi |
+|---|---|
+| **City** | Buka detail & bangun di kota yang dipilih |
+| **General** | Lihat semua jenderal & unit yang dimiliki |
+| **Waypoint** | Set jalur gerak unit secara otomatis |
+| **War Gear** | Equip alat perang (Catapult, dll) ke unit |
+| **Info** | Tampilkan Victory & Defeat conditions |
+| **War Drum** | Gunakan item pemulihan HP unit |
+
+---
+
+### 12e. Sistem Unit Stacking & Legion Effect
+
+Beberapa unit bisa berada di **hex yang sama** -- ini disebut **stacking**. Unit yang di-stack bersama membentuk sebuah **Legion**.
+
+**Legion Effect** memberikan bonus pasif selama unit berada dalam hex yang sama:
+- Bonus Defense untuk seluruh unit di hex tersebut
+- Beberapa jenderal memiliki skill yang memperkuat Legion Effect mereka sendiri
+- Julia Caesar -- skill *Legio Formation* adalah contoh bonus Legion Effect
+
+Jumlah maksimal unit per hex: **3 unit**.
+
+---
+
+### 12f. Pohon Kebijakan Kerajaan (National Policy)
+
+Di dalam battle, pemain bisa mengakses **National Policy** -- pohon kebijakan yang memberikan buff permanen selama misi berlangsung. Dibagi tiga kategori:
+
+| Kategori | Contoh Kebijakan | Efek |
+|---|---|---|
+| **Combat** | Infantry Tactics | Infantry Mobility +1 |
+| **Combat** | Cavalry Charge | Cavalry Attack +15% |
+| **Combat** | Archer Training | Range Attack range +1 |
+| **Logistics** | Iron Smelting | Iron income +20% |
+| **Logistics** | Tax Reform | Gold income +25% |
+| **Logistics** | Road Network | Semua unit Mobility +1 di Jalan |
+| **Management** | City Defense | Fortification HP +30% |
+| **Management** | Recruitment | Rekrut unit lebih murah -20% |
+| **Management** | Research | Wisdom income +30% |
+
+Setiap kebijakan dibuka menggunakan **Wisdom**. Kebijakan yang dipilih menyesuaikan gaya bermain pemain.
+
+---
+
+### 12g. War Gear (Alat Perang)
+
+War Gear adalah item yang bisa di-equip ke unit sebelum atau selama battle:
+
+| War Gear | Efek |
+|---|---|
+| **Catapult Lv.1** | Ignore 25% damage reduction dari kota/benteng |
+| **Support Wagon** | Unit yang di-equip bisa memulihkan HP sekitar |
+
+War Gear dikonsumsi hanya dalam satu battle -- setelah battle selesai, War Gear kembali ke inventori.
+
+---
+
+### 12h. Item Konsumable Dalam Battle
+
+**War Drum** -- item yang bisa digunakan kapan saja saat giliran pemain untuk **memulihkan sejumlah kecil HP** unit yang dipilih. Sangat berguna saat unit hampir kalah sebelum sempat mundur.
+
+Item ini didapat dari: stage reward, quest, daily login, dan Market.
+
+---
+
+### 12i. Waypoint System
+
+Pemain bisa set **waypoint** (titik tujuan) ke unit agar bergerak otomatis melewati jalur yang sudah ditentukan. Ini berguna untuk:
+- Menggerakkan banyak unit sekaligus tanpa harus klik satu per satu
+- Menentukan rute aman menghindari musuh kuat
+
+Waypoint ditampilkan sebagai pin kuning di peta.
+
+---
+
+### 12j. Dialog Karakter Dalam Battle
+
+Seperti yang terlihat di referensi EW7 -- jenderal memberikan komentar situasional dalam battle lewat **dialog box** di pojok kiri bawah. Portrait karakter muncul di kiri, teks dialog di kanan.
+
+Di Isekai Conqueror, dialog dalam battle menggunakan **gaya anime** -- portrait Julia Caesar (atau jenderal aktif) muncul dengan ekspresi berbeda sesuai situasi:
+
+| Situasi | Contoh Dialog Julia |
+|---|---|
+| Awal battle | "Ikuti strategiku. Jangan bertindak sendiri." |
+| Unit hampir mati | "Mundur dulu. Aku tidak membiarkan pasukanku mati sia-sia." |
+| Musuh dikalahkan | "Tepat seperti yang kurencanakan." |
+| Triangle advantage | "Keunggulan taktis. Gunakan sekarang." |
+| Kota dikuasai | "Kota ini sekarang milik kita. Perkuat pertahanannya." |
+
+---
+
+### 12k. Pause Menu Dalam Battle
+
+Saat tombol Pause ditekan, menu berikut muncul:
+
+| Opsi | Fungsi |
+|---|---|
+| **Restart** | Ulangi misi dari awal |
+| **Setting** | BGM, Sound, Game Speed |
+| **Exit** | Keluar ke Campaign Menu |
+| **Combat Scene** | Toggle ON/OFF animasi pertempuran |
+
+**Combat Scene OFF** berguna untuk pemain yang ingin bermain lebih cepat tanpa animasi.
+
+---
+
+## 13. Referensi & Inspirasi
 
 | Referensi | Aspek yang Diambil |
 |---|---|
@@ -571,7 +859,7 @@ Julia: "...Tidak buruk. Untuk pemula."
 
 ---
 
-## 12. Roadmap Pengembangan
+## 14. Roadmap Pengembangan
 
 ### Fase 1 -- Fondasi (SELESAI)
 - [x] Konsep & visi game
@@ -618,4 +906,4 @@ Julia: "...Tidak buruk. Untuk pemula."
 ---
 
 *Dokumen ini akan terus diperbarui seiring perkembangan proyek.*  
-*Versi berikutnya: GDD v0.5 -- Desain Chapter 2 & sistem jenderal lengkap.*
+*Versi berikutnya: GDD v0.7 -- Desain sistem kota & kebijakan kerajaan untuk Arc 1.*
